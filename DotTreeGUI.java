@@ -197,9 +197,20 @@ public class DotTreeGUI extends DrawingGUI {
 		g.setColor(rainbow[level % rainbow.length]);
 		// Draw this node's dot and lines through it
 		// TODO: YOUR CODE HERE
+		//draw circle
+		g.drawOval((int)tree.getPoint().getX(), (int)tree.getPoint().getY(), 2*dotRadius, 2*dotRadius);
+		g.fillOval((int)tree.getPoint().getX(), (int)tree.getPoint().getY(), 2*dotRadius, 2*dotRadius);
+		//draw lines
+		g.drawLine((int)tree.getPoint().getX(), tree.getY1(), (int)tree.getPoint().getX(), tree.getY2());
+		g.drawLine(tree.getX1(), (int)tree.getPoint().getY(), tree.getX2(), (int)tree.getPoint().getY());
 
 		// Recurse with children
 		// TODO: YOUR CODE HERE
+		for (int i = 1; i <= 4; i ++) {
+			if (tree.hasChild(i)) {
+				drawTree(g, tree.getChild(i), level + 1);
+			}
+		}
 	}
 
 	public static void main(String[] args) {

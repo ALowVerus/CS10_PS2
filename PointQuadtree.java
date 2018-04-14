@@ -71,6 +71,45 @@ public class PointQuadtree<E extends Point2D> {
 	 */
 	public void insert(E p2) {
 		// TODO: YOUR CODE HERE
+		// If point lies in quadrant 1
+		if ((int)p2.getX() <= point.getX() && (int)p2.getY() <= point.getY()) {
+			if (hasChild(1)) {
+				getChild(1).insert(p2);
+			}
+			else {
+				c1 = new PointQuadtree(p2, x1, y1, (int)point.getX(), (int)point.getY());
+			}	
+		}
+		// If point lies in quadrant 2
+		else if ((int)p2.getX() >= point.getX() && (int)p2.getY() <= point.getY()) {
+			if (hasChild(2)) {
+				getChild(2).insert(p2);
+			}
+			else {
+				c2 = new PointQuadtree(p2, (int)point.getX(), y1, x2, (int)point.getY());
+			}	
+		}
+		// If point lies in quadrant 3
+		else if ((int)p2.getX() <= point.getX() && (int)p2.getY() >= point.getY()) {
+			if (hasChild(3)) {
+				getChild(3).insert(p2);
+			}
+			else {
+				c3 = new PointQuadtree(p2, x1, (int)point.getX(), (int)point.getX(), y2);
+			}	
+		}
+		// If point lies in quadrant 4
+		else if ((int)p2.getX() >= point.getX() && (int)p2.getY() >= point.getY()) {
+			if (hasChild(4)) {
+				getChild(4).insert(p2);
+			}
+			else {
+				c3 = new PointQuadtree(p2,(int)point.getX(), (int)point.getY(), x2, y2);
+			}	
+		}
+		else {
+			System.out.println("Invalid code. Check the PointQuadtree.inster(p2");
+		}
 	}
 	
 	/**
@@ -78,6 +117,13 @@ public class PointQuadtree<E extends Point2D> {
 	 */
 	public int size() {
 		// TODO: YOUR CODE HERE
+		int size = 1;
+		for (int i = 1; i <= 4; i ++) {
+			if (hasChild(i)) {
+				size += getChild(i).size();
+			}
+		}
+		return size;
 	}
 	
 	/**
@@ -85,6 +131,13 @@ public class PointQuadtree<E extends Point2D> {
 	 */
 	public List<E> allPoints() {
 		// TODO: YOUR CODE HERE
+		List<E> myChildren = new List<E>(point);
+		for (int i = 1; i <= 4; i ++) {
+			if (hasChild(i)) {
+				myChildren.addAll(getChild(i).allPoints());
+			}
+		}
+		return myChildren;
 	}	
 
 	/**
@@ -96,6 +149,23 @@ public class PointQuadtree<E extends Point2D> {
 	 */
 	public List<E> findInCircle(double cx, double cy, double cr) {
 		// TODO: YOUR CODE HERE
+		//To find all points within the circle (cx,cy,cr), stored in a tree covering rectangle (x1,y1)-(x2,y2)
+		List<E> myHits = new List<E>();
+		//If the circle intersects the rectangle
+		if (cx + cr >= x2 || cx - cr <= x1 || cy + cr >= y2 || cy - cr <= y1) {
+			//If the tree's point is in the circle, then the blob is a "hit"
+			if (cr * cr >= (point.getX() - cx)*(point.getX() - cx) + (point.getY() - cy)*(point.getY() - cy)) {
+				myHits.add(point);
+			}
+			//For each quadrant with a child
+			for (int i = 1; i <= 4; i ++) {
+				if (hasChild(i)) {
+					//Recurse with that child
+					myHits.addAll(getChild(i).findInCircle(cx, cy, cr));
+				}
+			}
+		}
+		return myHits;
 	}
 
 	// TODO: YOUR CODE HERE for any helper methods
