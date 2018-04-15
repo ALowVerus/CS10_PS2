@@ -71,44 +71,15 @@ public class PointQuadtree<E extends Point2D> {
 	 */
 	public void insert(E p2) {
 		// TODO: YOUR CODE HERE
-		// If point lies in quadrant 1
-		if ((int)p2.getX() <= point.getX() && (int)p2.getY() <= point.getY()) {
-			if (hasChild(1)) {
-				getChild(1).insert(p2);
+		for (int i = 1; i <= 4; i ++) {
+			if (isWithinBounds(i, point, p2, x1, y1, x2, y2)) {
+				if (hasChild(i)) {
+					getChild(i).insert(p2);
+				}
+				else {
+					setQuadrant(i, makeBoundedPoint(i, point, p2, x1, y1, x2, y2));
+				}
 			}
-			else {
-				c1 = new PointQuadtree(p2, x1, y1, (int)point.getX(), (int)point.getY());
-			}	
-		}
-		// If point lies in quadrant 2
-		else if ((int)p2.getX() >= point.getX() && (int)p2.getY() <= point.getY()) {
-			if (hasChild(2)) {
-				getChild(2).insert(p2);
-			}
-			else {
-				c2 = new PointQuadtree(p2, (int)point.getX(), y1, x2, (int)point.getY());
-			}	
-		}
-		// If point lies in quadrant 3
-		else if ((int)p2.getX() <= point.getX() && (int)p2.getY() >= point.getY()) {
-			if (hasChild(3)) {
-				getChild(3).insert(p2);
-			}
-			else {
-				c3 = new PointQuadtree(p2, x1, (int)point.getX(), (int)point.getX(), y2);
-			}	
-		}
-		// If point lies in quadrant 4
-		else if ((int)p2.getX() >= point.getX() && (int)p2.getY() >= point.getY()) {
-			if (hasChild(4)) {
-				getChild(4).insert(p2);
-			}
-			else {
-				c4 = new PointQuadtree(p2,(int)point.getX(), (int)point.getY(), x2, y2);
-			}	
-		}
-		else {
-			System.out.println("Invalid code. Check the PointQuadtree.inster(p2");
 		}
 	}
 	
@@ -177,14 +148,47 @@ public class PointQuadtree<E extends Point2D> {
 		if (quadrant == 1) {
 			c1 = target;
 		}
-		if (quadrant == 1) {
-			c1 = target;
+		else if (quadrant == 2) {
+			c2 = target;
 		}
-		if (quadrant == 1) {
-			c1 = target;
+		else if (quadrant == 3) {
+			c3 = target;
 		}
+		else if (quadrant == 4) {
+			c4 = target;
+		}
+		else {
+			System.out.println("You just tried to access an invalid quadrant. See PointQuadtree's setQuadrant.");
+		}
+	}
+	
+	private boolean isWithinBounds(int quadrant, E point, E p2, int x1, int y1, int x2, int y2) {
+		if (
+				(quadrant == 1 && (int)p2.getX() <= point.getX() && (int)p2.getY() <= point.getY()) ||
+				(quadrant == 2 && (int)p2.getX() >= point.getX() && (int)p2.getY() <= point.getY()) ||
+				(quadrant == 3 && (int)p2.getX() <= point.getX() && (int)p2.getY() >= point.getY()) ||
+				(quadrant == 4 && (int)p2.getX() >= point.getX() && (int)p2.getY() >= point.getY())
+				) {
+			return true;
+		}
+		return false;
+	}
+	
+	private PointQuadtree<E> makeBoundedPoint(int quadrant, E point, E p2, int x1, int y1, int x2, int y2) {
 		if (quadrant == 1) {
-			c1 = target;
+			return new PointQuadtree(p2, x1, y1, (int)point.getX(), (int)point.getY());
+		}
+		else if (quadrant == 2) {
+			return new PointQuadtree(p2, (int)point.getX(), y1, x2, (int)point.getY());
+		}
+		else if (quadrant == 3) {
+			return new PointQuadtree(p2, x1, (int)point.getX(), (int)point.getX(), y2);
+		}
+		else if (quadrant == 4) {
+			return new PointQuadtree(p2,(int)point.getX(), (int)point.getY(), x2, y2);
+		}
+		else {
+			return null;
 		}
 	}
 }
