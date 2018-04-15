@@ -63,7 +63,10 @@ public class PointQuadtree<E extends Point2D> {
 	 * @param quadrant	1 through 4
 	 */
 	public boolean hasChild(int quadrant) {
-		return (quadrant==1 && c1!=null) || (quadrant==2 && c2!=null) || (quadrant==3 && c3!=null) || (quadrant==4 && c4!=null);
+		return (quadrant==1 && c1!=null) || 
+				(quadrant==2 && c2!=null) || 
+				(quadrant==3 && c3!=null) || 
+				(quadrant==4 && c4!=null);
 	}
 
 	/**
