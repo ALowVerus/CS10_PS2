@@ -104,7 +104,7 @@ public class PointQuadtree<E extends Point2D> {
 				getChild(4).insert(p2);
 			}
 			else {
-				c3 = new PointQuadtree(p2,(int)point.getX(), (int)point.getY(), x2, y2);
+				c4 = new PointQuadtree(p2,(int)point.getX(), (int)point.getY(), x2, y2);
 			}	
 		}
 		else {

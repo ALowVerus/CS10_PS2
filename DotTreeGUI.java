@@ -50,10 +50,23 @@ public class DotTreeGUI extends DrawingGUI {
 		if (mode == 'a') {
 			// Add a new dot at the point
 			// TODO: YOUR CODE HERE
+			Dot target = new Dot(x, y);
+			if (tree == null) {
+				tree = new PointQuadtree<Dot>(target, 0, 0, width, height);
+			}
+			else {
+				tree.insert(target);
+			}
 		}
 		else if (mode == 'q') {
 			// Set "found" to what tree says is near the mouse press
 			// TODO: YOUR CODE HERE
+			if (tree == null) {
+				System.out.println("Nothing to search, boss.");
+			}
+			else {
+				found = tree.findInCircle(x, y, mouseRadius);
+			}
 		}
 		else {
 			System.out.println("clicked at "+x+","+y);
@@ -198,8 +211,8 @@ public class DotTreeGUI extends DrawingGUI {
 		// Draw this node's dot and lines through it
 		// TODO: YOUR CODE HERE
 		//draw circle
-		g.drawOval((int)tree.getPoint().getX(), (int)tree.getPoint().getY(), 2*dotRadius, 2*dotRadius);
-		g.fillOval((int)tree.getPoint().getX(), (int)tree.getPoint().getY(), 2*dotRadius, 2*dotRadius);
+		g.drawOval((int)tree.getPoint().getX()-mouseRadius/2, (int)tree.getPoint().getY()-mouseRadius/2, 2*dotRadius, 2*dotRadius);
+		g.fillOval((int)tree.getPoint().getX()-mouseRadius/2, (int)tree.getPoint().getY()-mouseRadius/2, 2*dotRadius, 2*dotRadius);
 		//draw lines
 		g.drawLine((int)tree.getPoint().getX(), tree.getY1(), (int)tree.getPoint().getX(), tree.getY2());
 		g.drawLine(tree.getX1(), (int)tree.getPoint().getY(), tree.getX2(), (int)tree.getPoint().getY());
