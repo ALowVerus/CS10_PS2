@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class CollisionGUI extends DrawingGUI {
 	private static final int width=800, height=600;		// size of the universe
 
-	private List<Blob> blobs;						// all the blobs
-	private List<Blob> colliders;					// the blobs who collided at this step
+	private ArrayList<Blob> blobs;						// all the blobs
+	private ArrayList<Blob> colliders;					// the blobs who collided at this step
 	private char blobType = 'b';						// what type of blob to create
 	private char collisionHandler = 'c';				// when there's a collision, 'c'olor them, or 'd'estroy them
 	private int delay = 100;							// timer control
@@ -24,7 +24,7 @@ public class CollisionGUI extends DrawingGUI {
 	public CollisionGUI() {
 		super("super-collider", width, height);
 
-		blobs = new ArrayList<Blob>();
+	ArrayList<Blob>	blobs = new ArrayList<Blob>();
 
 		// Timer drives the animation.
 		startTimer();
