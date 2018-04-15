@@ -77,7 +77,7 @@ public class PointQuadtree<E extends Point2D> {
 				getChild(1).insert(p2);
 			}
 			else {
-				c1 = new PointQuadtree(p2, x1, y1, (int)point.getX(), (int)point.getY());
+				c1 new PointQuadtree(p2, x1, y1, (int)point.getX(), (int)point.getY());
 			}	
 		}
 		// If point lies in quadrant 2
