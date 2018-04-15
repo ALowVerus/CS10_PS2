@@ -72,12 +72,12 @@ public class PointQuadtree<E extends Point2D> {
 	public void insert(E p2) {
 		// TODO: YOUR CODE HERE
 		for (int i = 1; i <= 4; i ++) {
-			if (isWithinBounds(i, point, p2, x1, y1, x2, y2)) {
+			if (isWithinBounds(i, p2)) {
 				if (hasChild(i)) {
 					getChild(i).insert(p2);
 				}
 				else {
-					setQuadrant(i, makeBoundedPoint(i, point, p2, x1, y1, x2, y2));
+					setQuadrant(i, makeBoundedPoint(i, p2));
 				}
 			}
 		}
@@ -162,7 +162,7 @@ public class PointQuadtree<E extends Point2D> {
 		}
 	}
 	
-	private boolean isWithinBounds(int quadrant, E point, E p2, int x1, int y1, int x2, int y2) {
+	private boolean isWithinBounds(int quadrant, E p2) {
 		if (
 				(quadrant == 1 && (int)p2.getX() <= point.getX() && (int)p2.getY() <= point.getY()) ||
 				(quadrant == 2 && (int)p2.getX() >= point.getX() && (int)p2.getY() <= point.getY()) ||
@@ -174,7 +174,7 @@ public class PointQuadtree<E extends Point2D> {
 		return false;
 	}
 	
-	private PointQuadtree<E> makeBoundedPoint(int quadrant, E point, E p2, int x1, int y1, int x2, int y2) {
+	private PointQuadtree<E> makeBoundedPoint(int quadrant, E p2) {
 		if (quadrant == 1) {
 			return new PointQuadtree(p2, x1, y1, (int)point.getX(), (int)point.getY());
 		}
@@ -182,7 +182,7 @@ public class PointQuadtree<E extends Point2D> {
 			return new PointQuadtree(p2, (int)point.getX(), y1, x2, (int)point.getY());
 		}
 		else if (quadrant == 3) {
-			return new PointQuadtree(p2, x1, (int)point.getX(), (int)point.getX(), y2);
+			return new PointQuadtree(p2, x1, (int)point.getY(), (int)point.getX(), y2);
 		}
 		else if (quadrant == 4) {
 			return new PointQuadtree(p2,(int)point.getX(), (int)point.getY(), x2, y2);
