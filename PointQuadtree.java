@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * A point quadtree: stores an element at a 2D position, 
  * with children at the subdivided quadrants
@@ -124,18 +125,24 @@ public class PointQuadtree<E extends Point2D> {
 	 */
 	public List<E> findInCircle(double cx, double cy, double cr) {
 		// TODO: YOUR CODE HERE --bounds might be wrong--
+		
+		
+		// Original, custom bounds. We commented this out after we read the documentation. F
+		
 		//To find all points within the circle (cx,cy,cr), stored in a tree covering rectangle (x1,y1)-(x2,y2)
 		List<E> myHits = new ArrayList<E>();   // ArrayList works but List doesn't
-		//If the circle intersects the rectangle
-		if (cx + cr <= x2 || cx - cr >= x1 || cy + cr <= y2 || cy - cr >= y1) {
-			//If the tree's point is in the circle, then the blob is a "hit"
-			if (cr * cr >= (point.getX() - cx)*(point.getX() - cx) + (point.getY() - cy)*(point.getY() - cy)) {
-				//System.out.println("Trang e things have happened here");
+		// If the circle intersects the rectangle
+		if (Geometry.circleIntersectsRectangle(cx, cy, cr, x1, y1, x2, y2)) {
+		// if (cx - cr <= x2 && cx + cr >= x1 && cy + cr >= y1 && cy - cr <= y2) {
+			// If the tree's point is in the circle, then the blob is a "hit"
+			if (Geometry.pointInCircle(point.getX(), point.getY(), cx, cy, cr)) {
+			// if (cr * cr >= (point.getX() - cx)*(point.getX() - cx) + (point.getY() - cy)*(point.getY() - cy)) {
+				// System.out.println("Trange things have happened here");
 				myHits.add(point);
 			}
 			//For each quadrant with a child
 			for (int i = 1; i <= 4; i ++) {
-				if (hasChild(i)) {
+					if (hasChild(i)) {
 					//Recurse with that child
 					//System.out.println("Children acquired");
 					myHits.addAll(getChild(i).findInCircle(cx, cy, cr));
@@ -144,7 +151,7 @@ public class PointQuadtree<E extends Point2D> {
 		}
 		return myHits;
 	}
-
+	
 	// TODO: YOUR CODE HERE for any helper methods
 	
 	// Setters
