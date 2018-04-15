@@ -131,7 +131,8 @@ public class PointQuadtree<E extends Point2D> {
 	 */
 	public List<E> allPoints() {
 		// TODO: YOUR CODE HERE
-		List<E> myChildren = new List<E>(point);
+		List<E> myChildren = new ArrayList<E>();
+		myChildren.add(point);
 		for (int i = 1; i <= 4; i ++) {
 			if (hasChild(i)) {
 				myChildren.addAll(getChild(i).allPoints());
@@ -148,9 +149,9 @@ public class PointQuadtree<E extends Point2D> {
 	 * @return    	the points in the circle (and the qt's rectangle)
 	 */
 	public List<E> findInCircle(double cx, double cy, double cr) {
-		// TODO: YOUR CODE HERE
+		// TODO: YOUR CODE HERE --bounds might be wrong--
 		//To find all points within the circle (cx,cy,cr), stored in a tree covering rectangle (x1,y1)-(x2,y2)
-		List<E> myHits = new List<E>();
+		List<E> myHits = new ArrayList<E>();   // ArrayList works but List doesn't
 		//If the circle intersects the rectangle
 		if (cx + cr >= x2 || cx - cr <= x1 || cy + cr >= y2 || cy - cr <= y1) {
 			//If the tree's point is in the circle, then the blob is a "hit"
