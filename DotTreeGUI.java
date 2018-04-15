@@ -177,6 +177,10 @@ public class DotTreeGUI extends DrawingGUI {
 		}
 		// TODO: YOUR CODE HERE -- your test cases
 
+		else if (key=='c') {
+			tree = null;
+		}
+		
 		repaint();
 	}
 	
