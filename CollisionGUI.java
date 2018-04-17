@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class CollisionGUI extends DrawingGUI {
 	private static final int width=800, height=600;		// size of the universe
 
-	private ArrayList<Blob> blobs;						// all the blobs
-	private ArrayList<Blob> colliders;					// the blobs who collided at this step
+	private ArrayList<Blob> blobs = new ArrayList<Blob>();						// all the blobs
+	private ArrayList<Blob> colliders = new ArrayList<Blob>();					// the blobs who collided at this step
 	private char blobType = 'b';						// what type of blob to create
 	private char collisionHandler = 'c';				// when there's a collision, 'c'olor them, or 'd'estroy them
 	private int delay = 100;							// timer control
@@ -109,13 +109,15 @@ public class CollisionGUI extends DrawingGUI {
 		// Create the tree
 		// For each blob, see if anybody else collided with it
 		colliders = new ArrayList<Blob>();
-		PointQuadtree tree = new PointQuadtree(blobs.get(0), 0, 0, width, height);
-		for (int i = 1; i < blobs.size(); i++) {
-			tree.insert(blobs.get(i));
-		}
-		for (int i = 0; i < blobs.size(); i++) {
-			ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
-			colliders.addAll(found);
+		if (blobs.size() > 0) {
+			PointQuadtree tree = new PointQuadtree(blobs.get(0), 0, 0, width, height);
+			for (int i = 1; i < blobs.size(); i++) {
+				tree.insert(blobs.get(i));
+			}
+			for (int i = 0; i < blobs.size(); i++) {
+				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
+				colliders.addAll(found);
+			}
 		}
 	}
 
