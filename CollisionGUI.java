@@ -98,6 +98,16 @@ public class CollisionGUI extends DrawingGUI {
 		// TODO: YOUR CODE HERE
 		// Create the tree
 		// For each blob, see if anybody else collided with it
+		PointQuadtree tree = new PointQuadtree(blobs.get(0), 0, 0, width, height);
+		for (int i = 1; i < blobs.size(); i++) {
+			tree.insert(blobs.get(i));
+		}
+		for (int i = 0; i < blobs.size(); i++) {
+			ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
+			for (int k = 0; k < found.size(); k ++) {
+				found
+			}
+		}
 	}
 
 	/**
