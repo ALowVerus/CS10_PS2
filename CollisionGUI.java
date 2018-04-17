@@ -90,12 +90,15 @@ public class CollisionGUI extends DrawingGUI {
 		// Ask all the blobs to draw themselves.
 		// Ask the colliders to draw themselves in red.
 		findColliders();
+		g.setColor(Color.GREEN);
 		for (Blob blob : blobs) {
 			g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
 		}
-	//	for (int i = 0; i < colliders.size(); i ++) {
-	//		colliders.get(i).
-	//	}
+		g.setColor(Color.RED);
+		for (int i = 0; i < colliders.size(); i ++) {
+			Blob blob = colliders.get(i);
+			g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+		}
 	}
 
 	/**
