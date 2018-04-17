@@ -89,6 +89,13 @@ public class CollisionGUI extends DrawingGUI {
 		// TODO: YOUR CODE HERE
 		// Ask all the blobs to draw themselves.
 		// Ask the colliders to draw themselves in red.
+		findColliders();
+		for (Blob blob : blobs) {
+			g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+		}
+	//	for (int i = 0; i < colliders.size(); i ++) {
+	//		colliders.get(i).
+	//	}
 	}
 
 	/**
@@ -98,15 +105,14 @@ public class CollisionGUI extends DrawingGUI {
 		// TODO: YOUR CODE HERE
 		// Create the tree
 		// For each blob, see if anybody else collided with it
+		colliders = new ArrayList<Blob>();
 		PointQuadtree tree = new PointQuadtree(blobs.get(0), 0, 0, width, height);
 		for (int i = 1; i < blobs.size(); i++) {
 			tree.insert(blobs.get(i));
 		}
 		for (int i = 0; i < blobs.size(); i++) {
 			ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
-			for (int k = 0; k < found.size(); k ++) {
-				found
-			}
+			colliders.addAll(found);
 		}
 	}
 

@@ -215,7 +215,6 @@ public class DotTreeGUI extends DrawingGUI {
 		// Draw this node's dot and lines through it
 		// TODO: YOUR CODE HERE
 		//draw circle
-		g.drawOval((int)tree.getPoint().getX()-mouseRadius/2, (int)tree.getPoint().getY()-mouseRadius/2, 2*dotRadius, 2*dotRadius);
 		g.fillOval((int)tree.getPoint().getX()-mouseRadius/2, (int)tree.getPoint().getY()-mouseRadius/2, 2*dotRadius, 2*dotRadius);
 		//draw lines
 		g.drawLine((int)tree.getPoint().getX(), tree.getY1(), (int)tree.getPoint().getX(), tree.getY2());
