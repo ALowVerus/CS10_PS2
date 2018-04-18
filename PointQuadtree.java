@@ -142,7 +142,7 @@ public class PointQuadtree<E extends Point2D> {
 			}
 			//For each quadrant with a child
 			for (int i = 1; i <= 4; i ++) {
-					if (hasChild(i)) {
+				if (hasChild(i)) {
 					//Recurse with that child
 					//System.out.println("Children acquired");
 					myHits.addAll(getChild(i).findInCircle(cx, cy, cr));
