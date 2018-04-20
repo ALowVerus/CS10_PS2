@@ -73,7 +73,7 @@ public class CollisionGUI extends DrawingGUI {
 				repaint();
 			}			
 		}
-		else if (k == 'c' || k == 'd') { // control how collisions are handled
+		else if (k == 'c' || k == 'd' || k == 'i') { // control how collisions are handled
 			collisionHandler = k;
 			System.out.println("collision:"+k);
 		}
@@ -90,18 +90,26 @@ public class CollisionGUI extends DrawingGUI {
 		// Ask all the blobs to draw themselves.
 		// Ask the colliders to draw themselves in red.
 		findColliders();
-		g.setColor(Color.GREEN);
-		for (Blob blob : blobs) {
-			if (!blob.getCollided()) {
-				g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
-			}
-		}
-		g.setColor(Color.RED);
-		for (int i = 0; i < colliders.size(); i ++) {
+		
+		if (collisionHandler == 'i') {
+			g.setColor(Color.RED);
+			for (int i = 0; i < colliders.size(); i ++) {
 				Blob blob = colliders.get(i);
 				if(blob.getCollided()) {
 					g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
 				}
+			}
+		}
+		else {
+			g.setColor(Color.GREEN);
+			for (Blob blob : blobs) {
+				g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+			}
+			g.setColor(Color.RED);
+			for (int i = 0; i < colliders.size(); i ++) {
+				Blob blob = colliders.get(i);
+				g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+			}
 		}
 	}
 
@@ -121,8 +129,9 @@ public class CollisionGUI extends DrawingGUI {
 			for (int i = 0; i < blobs.size(); i++) {
 				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
 				//blobs.remove(found.size() - 1);
-				found.remove(found.size() - 1);
-				colliders.addAll(found);
+				if (found.size() > 1) {
+					colliders.addAll(found);
+				}
 			}
 			for (Blob blob: colliders) {
 				blob.setCollided(true);
