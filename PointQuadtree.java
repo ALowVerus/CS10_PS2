@@ -207,36 +207,32 @@ public class PointQuadtree<E extends Point2D> {
 	// Delete a point from the PointQuadtree
 	public void deleteNode(PointQuadtree<E> target) {
 		// First, navigate to the point above the target
-		boolean iAmParent = false;
-		int targetNumber = 0;
+		int targetNumber = 5;
 		for (int i = 1; i <= 4; i ++) {
 			if (isWithinBounds(i, target.getPoint())) {
+				// Check whether the child is the target, and if it is, run delete methods
 				if (getChild(i) == target) {
-					iAmParent = true;
-					targetNumber = i;
+					// If node is null, delete it
+					if (getChild(i).size() == 1) {
+						setQuadrant(i, null);
+					}
+					// If node has one child, set child to own area
+					if (getChild(i).size() == 2) {
+						PointQuadtree<E> child = getChild(i);
+						setQuadrant(i, null);
+						for (int j = 1; j <= 4; j ++) {
+							if (child.hasChild(j)) {
+								insert(child.getChild(j).getPoint());
+							}
+						}
+					}
+					// If node has more than one child, get the largest on the left or the smallest on the right
 				}
+				// If the child isn't the father, recurse into the child
 				else {
 					deleteNode(target);
 				}
 			}
-		}
-		// Next, if this is the parent, check for child's status
-		if (iAmParent) {
-			// If node is null, delete it
-			if (getChild(targetNumber).size() == 1) {
-				setQuadrant(targetNumber, null);
-			}
-			// If node has one child, set child to own area
-			if (getChild(targetNumber).size() == 2) {
-				PointQuadtree<E> child = getChild(targetNumber);
-				setQuadrant(targetNumber, null);
-				for (int i = 1; i <= 4; i ++) {
-					if (child.hasChild(i)) {
-						insert(child.getChild(i).getPoint());
-					}
-				}
-			}
-			// If node has more than one child, get the largest on the left or the smallest on the right
 		}
 	}
 }
