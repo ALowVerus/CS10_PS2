@@ -54,9 +54,10 @@ public class CollisionGUI extends DrawingGUI {
 	}
 
 	/**
-	 * DrawingGUI method
+	 * DrawingGUI method called whenever a key is pressed
 	 */
-	public void handleKeyPress(char k) {
+	@Override
+	public void handleKeyPress(char k)  {
 		if (k == 'f') { // faster
 			if (delay>1) delay /= 2;
 			setTimerDelay(delay);
@@ -83,17 +84,19 @@ public class CollisionGUI extends DrawingGUI {
 	}
 
 	/**
-	 * DrawingGUI method, here drawing all the blobs and then re-drawing the colliders in red
+	 * DrawingGUI method, here drawing all the blobs in green and then re-drawing the colliders in red
 	 */
 	public void draw(Graphics g) {
 		// TODO: YOUR CODE HERE
 		// Ask all the blobs to draw themselves.
-		// Ask the colliders to draw themselves in red.
+		// Ask just the colliders to draw themselves in red.
 		findColliders();
 		g.setColor(Color.GREEN);
+		
 		for (Blob blob : blobs) {
 			g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
 		}
+		
 		g.setColor(Color.RED);
 		for (int i = 0; i < colliders.size(); i ++) {
 			Blob blob = colliders.get(i);
@@ -111,9 +114,13 @@ public class CollisionGUI extends DrawingGUI {
 		colliders = new ArrayList<Blob>();
 		if (blobs.size() > 0) {
 			PointQuadtree tree = new PointQuadtree(blobs.get(0), 0, 0, width, height);
+			
+			// Add each blob to the tree
 			for (int i = 1; i < blobs.size(); i++) {
 				tree.insert(blobs.get(i));
 			}
+			
+			// Add each colliding blob to the list of colliders
 			for (int i = 0; i < blobs.size(); i++) {
 				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
 				if (found.size() > 1) {

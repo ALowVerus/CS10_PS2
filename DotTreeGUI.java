@@ -154,7 +154,7 @@ public class DotTreeGUI extends DrawingGUI {
 
 	/**
 	 * DrawingGUI method, here toggling the mode between 'a' and 'q'
-	 * and increasing/decresing mouseRadius via +/-
+	 * and increasing/decreasing mouseRadius via +/-
 	 */
 	@Override
 	public void handleKeyPress(char key) {
