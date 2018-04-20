@@ -137,14 +137,12 @@ public class PointQuadtree<E extends Point2D> {
 			// If the tree's point is in the circle, then the blob is a "hit"
 			if (Geometry.pointInCircle(point.getX(), point.getY(), cx, cy, cr)) {
 			// if (cr * cr >= (point.getX() - cx)*(point.getX() - cx) + (point.getY() - cy)*(point.getY() - cy)) {
-				// System.out.println("Trange things have happened here");
 				myHits.add(point);
 			}
 			//For each quadrant with a child
 			for (int i = 1; i <= 4; i ++) {
 				if (hasChild(i)) {
 					//Recurse with that child
-					//System.out.println("Children acquired");
 					myHits.addAll(getChild(i).findInCircle(cx, cy, cr));
 				}
 			}
@@ -155,7 +153,6 @@ public class PointQuadtree<E extends Point2D> {
 	// TODO: YOUR CODE HERE for any helper methods
 	
 	// Setters
-	
 	private void setQuadrant(int quadrant, PointQuadtree<E> target) {
 		if (quadrant == 1) {
 			c1 = target;
@@ -174,6 +171,7 @@ public class PointQuadtree<E extends Point2D> {
 		}
 	}
 	
+	// Check whether a point fits in a quadrant
 	private boolean isWithinBounds(int quadrant, E p2) {
 		if (
 				(quadrant == 1 && (int)p2.getX() <= point.getX() && (int)p2.getY() <= point.getY()) ||
@@ -186,6 +184,7 @@ public class PointQuadtree<E extends Point2D> {
 		return false;
 	}
 	
+	// Make a new PointQuadtree with bounds appropriate to a numbered quadrant
 	private PointQuadtree<E> makeBoundedPoint(int quadrant, E p2) {
 		if (quadrant == 1) {
 			return new PointQuadtree(p2, x1, y1, (int)point.getX(), (int)point.getY());
@@ -203,4 +202,59 @@ public class PointQuadtree<E extends Point2D> {
 			return null;
 		}
 	}
+	
+	// Delete a point from the PointQuadtree
+	public void deleteNode(PointQuadtree<E> target) {
+		// First, navigate to the point above the target
+		boolean iAmParent = false;
+		int targetNumber = 0;
+		for (int i = 1; i <= 4; i ++) {
+			if (isWithinBounds(i, target.getPoint())) {
+				if (getChild(i) == target) {
+					iAmParent = true;
+					targetNumber = i;
+				}
+				else {
+					deleteNode(target);
+				}
+			}
+		}
+		// Next, if this is the parent, check for child's status
+		if (iAmParent) {
+			// If node is null, delete it
+			if (getChild(targetNumber).size() == 1) {
+				setQuadrant(targetNumber, null);
+			}
+			// If node has one child, set child to own area
+			if (getChild(targetNumber).size() == 2) {
+				PointQuadtree<E> child = getChild(targetNumber);
+				setQuadrant(targetNumber, null);
+				for (int i = 1; i <= 4; i ++) {
+					if (child.hasChild(i)) {
+						insert(child.getChild(i).getPoint());
+					}
+				}
+			}
+			// If node has more than one child, get the largest on the left or the smallest on the right
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
