@@ -13,6 +13,7 @@ public class Blob implements Point2D {
 	protected double dx=0, dy=0;		// velocity, defaults to none
 	protected double r=5;				// radius
 	protected double dr=0;				// growth step (size and sign), defaults to none
+	protected boolean collided = false;
 	
 	public Blob() {
 		// Do nothing; everything has its default value
@@ -61,6 +62,14 @@ public class Blob implements Point2D {
 
 	public void setR(double r) {
 		this.r = r;
+	}
+	
+	public void setCollided(boolean b) {
+		collided = b;
+	}
+	
+	public boolean getCollided() {
+		return collided;
 	}
 
 	/**

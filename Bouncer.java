@@ -3,6 +3,7 @@
  */
 public class Bouncer extends Blob {
 	private int xmax, ymax;	// size of bouncing area
+	private boolean collided = false;
 
 	/**
 	 * Initializes with the given coordinates and bouncing area size, and random step sizes
@@ -14,6 +15,14 @@ public class Bouncer extends Blob {
 		// Step size randomly between -r and +r
 		dx = 2 * r * (Math.random() - 0.5);
 		dy = 2 * r * (Math.random() - 0.5);
+	}
+	
+	public void setCollided(boolean b) {
+		collided = b;
+	}
+	
+	public boolean getCollided() {
+		return collided;
 	}
 
 	@Override

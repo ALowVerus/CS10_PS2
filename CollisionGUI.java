@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author CBK, Fall 2016, using generic PointQuadtree
  */
 public class CollisionGUI extends DrawingGUI {
-	private static final int width=20, height=200;		// size of the universe
+	private static final int width=400, height=200;		// size of the universe
 
 	private ArrayList<Blob> blobs = new ArrayList<Blob>();						// all the blobs
 	private ArrayList<Blob> colliders;					// the blobs who collided at this step
@@ -92,7 +92,9 @@ public class CollisionGUI extends DrawingGUI {
 		findColliders();
 		g.setColor(Color.GREEN);
 		for (Blob blob : blobs) {
-			g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+			if (!blob.getCollided()) {
+				g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+			}
 		}
 		g.setColor(Color.RED);
 		for (int i = 0; i < colliders.size(); i ++) {
@@ -116,8 +118,12 @@ public class CollisionGUI extends DrawingGUI {
 			}
 			for (int i = 0; i < blobs.size(); i++) {
 				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
-				found.remove(found.size()-1);
+				//blobs.remove(found.size() - 1);
+				found.remove(found.size() - 1);
 				colliders.addAll(found);
+			}
+			for (Blob blob: colliders) {
+				blob.setCollided(true);
 			}
 		}
 	}
