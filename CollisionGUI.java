@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author CBK, Fall 2016, using generic PointQuadtree
  */
 public class CollisionGUI extends DrawingGUI {
-	private static final int width=400, height=200;		// size of the universe
+	private static final int width=400, height=400;		// size of the universe
 
 	private ArrayList<Blob> blobs = new ArrayList<Blob>();						// all the blobs
 	private ArrayList<Blob> colliders;					// the blobs who collided at this step
@@ -98,8 +98,10 @@ public class CollisionGUI extends DrawingGUI {
 		}
 		g.setColor(Color.RED);
 		for (int i = 0; i < colliders.size(); i ++) {
-			Blob blob = colliders.get(i);
-			g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+				Blob blob = colliders.get(i);
+				if(blob.getCollided()) {
+					g.fillOval((int)(blob.getX()-blob.r/2), (int)(blob.getY()-blob.r/2), (int)(2*blob.r), (int)(2*blob.r));
+				}
 		}
 	}
 
