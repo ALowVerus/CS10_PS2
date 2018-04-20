@@ -203,4 +203,40 @@ public class PointQuadtree<E extends Point2D> {
 			return null;
 		}
 	}
+
+	// Delete a point from the PointQuadtree
+	public void deleteNode(PointQuadtree<E> target) {
+		// First, navigate to the point above the target
+		boolean iAmParent = false;
+		int targetNumber = 0;
+		for (int i = 1; i <= 4; i ++) {
+			if (isWithinBounds(i, target.getPoint())) {
+				if (getChild(i) == target) {
+					iAmParent = true;
+					targetNumber = i;
+				}
+				else {
+					deleteNode(target);
+				}
+			}
+		}
+		// Next, if this is the parent, check for child's status
+		if (iAmParent) {
+			// If node is null, delete it
+			if (getChild(targetNumber).size() == 1) {
+				setQuadrant(targetNumber, null);
+			}
+			// If node has one child, set child to own area
+			if (getChild(targetNumber).size() == 2) {
+				PointQuadtree<E> child = getChild(targetNumber);
+				setQuadrant(targetNumber, null);
+				for (int i = 1; i <= 4; i ++) {
+					if (child.hasChild(i)) {
+						insert(child.getChild(i).getPoint());
+					}
+				}
+			}
+			// If node has more than one child, get the largest on the left or the smallest on the right
+		}
+	}
 }
