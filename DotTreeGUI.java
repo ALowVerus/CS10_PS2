@@ -68,6 +68,12 @@ public class DotTreeGUI extends DrawingGUI {
 				found = tree.findInCircle(x, y, mouseRadius);
 			}
 		}
+		else if (mode == 'd') {
+			// Delete a point when clicked
+			if (tree != null) {
+				Dot foundNode = tree.findInCircle(x, y, dotRadius).get(0);
+			}
+		}
 		else {
 			System.out.println("clicked at "+x+","+y);
 		}
