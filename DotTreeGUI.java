@@ -71,7 +71,9 @@ public class DotTreeGUI extends DrawingGUI {
 		else if (mode == 'd') {
 			// Delete a point when clicked
 			if (tree != null) {
-				Dot foundNode = tree.findInCircle(x, y, dotRadius).get(0);
+				Dot foundPoint = tree.findInCircle(x, y, dotRadius).get(0);
+				PointQuadtree<E> foundNode = tree.pointToNode(foundPoint);
+				tree.deleteNode(foundNode);
 			}
 		}
 		else {

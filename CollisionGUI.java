@@ -126,8 +126,8 @@ public class CollisionGUI extends DrawingGUI {
 			for (int i = 1; i < blobs.size(); i++) {
 				tree.insert(blobs.get(i));
 			}
-			for (int i = 0; i < blobs.size(); i++) {
-				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
+			for (Blob blob : blobs) {
+				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blob.getX(), blob.getY(), 2 * blob.r);
 				//blobs.remove(found.size() - 1);
 				if (found.size() > 1) {
 					colliders.addAll(found);

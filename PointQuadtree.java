@@ -204,6 +204,12 @@ public class PointQuadtree<E extends Point2D> {
 		}
 	}
 
+	
+	// Input point, get out node
+	public PointQuadtree<E> pointToNode(E point) {
+		if point
+	}
+	
 	// Delete a point from the PointQuadtree
 	public void deleteNode(PointQuadtree<E> target) {
 		// First, navigate to the point above the target
