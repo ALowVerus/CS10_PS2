@@ -161,10 +161,10 @@ public class CollisionGUI extends DrawingGUI {
 	public void test0() {
 		blobs = new ArrayList<Blob>();
 		blobType = 'b';
-		add(100, 100);
-		add(100, 200);
-		add(200, 100);
-		add(200, 200);
+		add(101, 101);
+		add(100, 199);
+		add(201, 100);
+		add(200, 201);
 		blobs.get(0).setVelocity(1, 0);
 		blobs.get(1).setVelocity(1, 0);
 		blobs.get(2).setVelocity(-1, 0);
@@ -177,14 +177,14 @@ public class CollisionGUI extends DrawingGUI {
 	public void test1() {
 		blobs = new ArrayList<Blob>();
 		blobType = 'b';
-		add(100, 100);
-		add(100, 200);
-		add(200, 100);
-		add(200, 200);
+		add(101, 101);
+		add(100, 199);
+		add(201, 100);
+		add(200, 201);
 		blobs.get(0).setVelocity(1, 0);
-		blobs.get(1).setVelocity(0, 1);
-		blobs.get(2).setVelocity(-1, 0);
-		blobs.get(3).setVelocity(0, 1);
+		blobs.get(1).setVelocity(-1, 0);
+		blobs.get(2).setVelocity(1, 0);
+		blobs.get(3).setVelocity(0, -1);
 	}
 
 	public static void main(String[] args) {
