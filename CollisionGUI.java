@@ -94,6 +94,9 @@ public class CollisionGUI extends DrawingGUI {
 		// Ask all the blobs to draw themselves.
 		// Ask just the colliders to draw themselves in red.
 		findColliders();
+		
+		System.out.println(blobs.size());
+		
 		g.setColor(Color.GREEN);
 		for (Blob blob : blobs) {
 			blob.draw(g);
@@ -117,9 +120,11 @@ public class CollisionGUI extends DrawingGUI {
 			PointQuadtree tree = new PointQuadtree(blobs.get(0), 0, 0, width, height);
 			
 			// Add each blob to the tree
-			for (Blob blob : blobs) {
-				tree.insert(blob);
+			for (int i = 1; i < blobs.size(); i++) {
+				tree.insert(blobs.get(i));
 			}
+			
+			System.out.println(tree.size());
 			
 			// Add each colliding blob to the list of colliders
 			for (Blob blob : blobs) {
@@ -156,15 +161,15 @@ public class CollisionGUI extends DrawingGUI {
 	 */
 	public void test0() {
 		blobs = new ArrayList<Blob>();
-		blobs.add(new Bouncer(100, 100, width, height));
-		blobs.get(0).setVelocity(0, 1);
-		blobs.add(new Bouncer(100, 200, width, height));
-		blobs.get(1).setVelocity(0, -1);
-		blobs.add(new Bouncer(200, 100, width, height));
-		blobs.get(2).setVelocity(0, 1);
-		blobs.add(new Bouncer(200, 200, width, height));
-		blobs.get(3).setVelocity(0, -1);
-		System.out.println(colliders.size());
+		blobType = 'b';
+		add(100, 100);
+		add(101, 200);
+		add(200, 103);
+		add(201, 201);
+		blobs.get(0).setVelocity(1, 0);
+		blobs.get(1).setVelocity(1, 0);
+		blobs.get(2).setVelocity(-1, 0);
+		blobs.get(3).setVelocity(-1, 0);
 	}
 
 	public static void main(String[] args) {
