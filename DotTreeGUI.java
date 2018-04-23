@@ -165,9 +165,9 @@ public class DotTreeGUI extends DrawingGUI {
 		tree.insert(new Dot(400,30)); // E
 		tree.insert(new Dot(700,400)); // F
 		int errors = 0;
-		errors += testFind(50,100,30,5,2,1);		// rect for all; circle for all; find all
-		errors += testFind(200,500,200,7,5,1);	// rect for all; circle for A,B; find A
-		errors += testFind(700,300,100,7,5,1);	// rect for all; circle for all; find B
+		errors += testFind(50,100,30,5,2,1);		
+		errors += testFind(200,500,200,7,5,1);	
+		errors += testFind(700,300,15,7,5,0);	
 		if (errors == 0) {
 			System.out.println("You have passed. Long ago, your test cases lived in harmony. But now, I believe that you can save the world.");
 		}

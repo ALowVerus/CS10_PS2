@@ -78,8 +78,11 @@ public class CollisionGUI extends DrawingGUI {
 			collisionHandler = k;
 			System.out.println("collision:"+k);
 		}
-		else if (k == '0') { // run my test case
+		else if (k == '0') { // run test case 0
 			test0();
+		}
+		else if (k == '1') { // run test case 1
+			test1();
 		}
 		else { // set the type for new blobs
 			blobType = k;			
@@ -94,9 +97,7 @@ public class CollisionGUI extends DrawingGUI {
 		// Ask all the blobs to draw themselves.
 		// Ask just the colliders to draw themselves in red.
 		findColliders();
-		
-		System.out.println(blobs.size());
-		
+				
 		g.setColor(Color.GREEN);
 		for (Blob blob : blobs) {
 			blob.draw(g);
@@ -123,9 +124,7 @@ public class CollisionGUI extends DrawingGUI {
 			for (int i = 1; i < blobs.size(); i++) {
 				tree.insert(blobs.get(i));
 			}
-			
-			System.out.println(tree.size());
-			
+						
 			// Add each colliding blob to the list of colliders
 			for (Blob blob : blobs) {
 				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blob.getX(), blob.getY(), 2 * blob.r);
@@ -163,13 +162,29 @@ public class CollisionGUI extends DrawingGUI {
 		blobs = new ArrayList<Blob>();
 		blobType = 'b';
 		add(100, 100);
-		add(101, 200);
-		add(200, 103);
-		add(201, 201);
+		add(100, 200);
+		add(200, 100);
+		add(200, 200);
 		blobs.get(0).setVelocity(1, 0);
 		blobs.get(1).setVelocity(1, 0);
 		blobs.get(2).setVelocity(-1, 0);
 		blobs.get(3).setVelocity(-1, 0);
+	}
+	
+	/**
+	 * Test method. Create two blobs, set them to miss each other.
+	 */
+	public void test1() {
+		blobs = new ArrayList<Blob>();
+		blobType = 'b';
+		add(100, 100);
+		add(100, 200);
+		add(200, 100);
+		add(200, 200);
+		blobs.get(0).setVelocity(1, 0);
+		blobs.get(1).setVelocity(0, 1);
+		blobs.get(2).setVelocity(-1, 0);
+		blobs.get(3).setVelocity(0, 1);
 	}
 
 	public static void main(String[] args) {
