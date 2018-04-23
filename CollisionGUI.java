@@ -37,9 +37,11 @@ public class CollisionGUI extends DrawingGUI {
 		if (blobType=='b') {
 			blobs.add(new Bouncer(x,y,width,height));
 		}
-		else if (blobType=='w') {
-			blobs.add(new Wanderer(x,y));
-		}
+		
+//		else if (blobType == 't') {
+//			blobs.add(new Teleporter(x,y,width,height));
+//		}
+		
 		else {
 			System.err.println("Unknown blob type "+blobType);
 		}
@@ -73,10 +75,22 @@ public class CollisionGUI extends DrawingGUI {
 				repaint();
 			}			
 		}
-		else if (k == 'c' || k == 'd' || k == 'i') { // control how collisions are handled
+		else if (k == 'c' || k == 'd' || k == 'i' || k == 'w') { // control how collisions are handled
 			collisionHandler = k;
 			System.out.println("collision:"+k);
 		}
+		else if (k == 'g') { // Make blobs giant
+			for (Blob blob: blobs) {
+				blob.r *= 1.1;
+			}
+		}
+		else if (k == 't') { // Make blobs tiny
+			for (Blob blob: blobs) {
+				blob.r *= 0.9;
+			}
+		
+		}
+		
 		else { // set the type for new blobs
 			blobType = k;			
 		}
@@ -91,7 +105,7 @@ public class CollisionGUI extends DrawingGUI {
 		// Ask the colliders to draw themselves in red.
 		findColliders();
 		
-		if (collisionHandler == 'i') {
+		if (collisionHandler == 'i') { // Make blobs turn invisible except when colliding
 			g.setColor(Color.RED);
 			for (int i = 0; i < colliders.size(); i ++) {
 				Blob blob = colliders.get(i);
@@ -100,6 +114,16 @@ public class CollisionGUI extends DrawingGUI {
 				}
 			}
 		}
+		
+		else if (collisionHandler == 'w') {
+			for (int i = 0; i < colliders.size(); i ++) {
+				Blob blob = colliders.get(i);
+				if(blob.getCollided()) {
+					blob = new Teleporter(blob.getX(),blob.getY(),width,height);
+				}
+			}
+		}
+		
 		else {
 			g.setColor(Color.GREEN);
 			for (Blob blob : blobs) {
@@ -128,7 +152,6 @@ public class CollisionGUI extends DrawingGUI {
 			}
 			for (int i = 0; i < blobs.size(); i++) {
 				ArrayList<Blob> found = (ArrayList<Blob>)tree.findInCircle(blobs.get(i).getX(), blobs.get(i).getY(), 2 * blobs.get(i).r);
-				//blobs.remove(found.size() - 1);
 				if (found.size() > 1) {
 					colliders.addAll(found);
 				}
