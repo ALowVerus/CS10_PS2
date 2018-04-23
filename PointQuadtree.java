@@ -204,6 +204,12 @@ public class PointQuadtree<E extends Point2D> {
 		}
 	}
 
+	
+	// Input point, get out node
+	public PointQuadtree<E> pointToNode(E point) {
+		if point
+	}
+	
 	// Delete a point from the PointQuadtree
 	public void deleteNode(PointQuadtree<E> target) {
 		// First, navigate to the point above the target
@@ -217,7 +223,7 @@ public class PointQuadtree<E extends Point2D> {
 						setQuadrant(i, null);
 					}
 					// If node has one child, set child to own area
-					if (getChild(i).size() == 2) {
+					else if (getChild(i).size() == 2) {
 						PointQuadtree<E> child = getChild(i);
 						setQuadrant(i, null);
 						for (int j = 1; j <= 4; j ++) {
@@ -227,6 +233,9 @@ public class PointQuadtree<E extends Point2D> {
 						}
 					}
 					// If node has more than one child, get the largest on the left or the smallest on the right
+					else {
+						
+					}
 				}
 				// If the child isn't the father, recurse into the child
 				else {
