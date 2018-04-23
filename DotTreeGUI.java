@@ -151,6 +151,27 @@ public class DotTreeGUI extends DrawingGUI {
 		bad += testFind(0,0,900,12,12,12);	// rect for all; circle for all; find all
 		if (bad==0) System.out.println("test 1 passed!");
 	}
+	
+	/**
+	 * Test tree 2- hardcoded point locations for an 800x600 window
+	 * Created by Aidan and Eitan
+	 */
+	public void test2() {
+		found = null;
+		tree = new PointQuadtree<Dot>(new Dot(150,300),0,0,width,height); // Point A
+		tree.insert(new Dot(20,100)); // B
+		tree.insert(new Dot(300,300)); // C
+		tree.insert(new Dot(100,350)); // D
+		tree.insert(new Dot(400,30)); // E
+		tree.insert(new Dot(700,400)); // F
+		int errors = 0;
+		errors += testFind(50,100,30,5,2,1);		// rect for all; circle for all; find all
+		errors += testFind(200,500,200,7,5,1);	// rect for all; circle for A,B; find A
+		errors += testFind(700,300,100,7,5,1);	// rect for all; circle for all; find B
+		if (errors == 0) {
+			System.out.println("You have passed. Long ago, your test cases lived in harmony. But now, I believe that you can save the world.");
+		}
+	}
 
 	/**
 	 * DrawingGUI method, here toggling the mode between 'a' and 'q'
@@ -175,6 +196,10 @@ public class DotTreeGUI extends DrawingGUI {
 		else if (key=='1') {
 			test1();
 		}
+		else if (key == '2') {
+			test2();
+		}
+		
 		// TODO: YOUR CODE HERE -- your test cases
 
 		else if (key=='c') {
