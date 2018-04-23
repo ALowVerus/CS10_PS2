@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author CBK, Fall 2016, using generic PointQuadtree
  */
 public class CollisionGUI extends DrawingGUI {
-	private static final int width=400, height=200;		// size of the universe
+	private static final int width=400, height=400;		// size of the universe
 
 	private ArrayList<Blob> blobs = new ArrayList<Blob>();						// all the blobs
 	private ArrayList<Blob> colliders;					// the blobs who collided at this step
@@ -78,6 +78,9 @@ public class CollisionGUI extends DrawingGUI {
 			collisionHandler = k;
 			System.out.println("collision:"+k);
 		}
+		else if (k == '0') { // run my test case
+			test0();
+		}
 		else { // set the type for new blobs
 			blobType = k;			
 		}
@@ -114,8 +117,8 @@ public class CollisionGUI extends DrawingGUI {
 			PointQuadtree tree = new PointQuadtree(blobs.get(0), 0, 0, width, height);
 			
 			// Add each blob to the tree
-			for (int i = 1; i < blobs.size(); i++) {
-				tree.insert(blobs.get(i));
+			for (Blob blob : blobs) {
+				tree.insert(blob);
 			}
 			
 			// Add each colliding blob to the list of colliders
@@ -146,6 +149,22 @@ public class CollisionGUI extends DrawingGUI {
 		}
 		// Now update the drawing
 		repaint();
+	}
+	
+	/**
+	 * Test method. Create two blobs, set them to go fwds or bwds into each other.
+	 */
+	public void test0() {
+		blobs = new ArrayList<Blob>();
+		blobs.add(new Bouncer(100, 100, width, height));
+		blobs.get(0).setVelocity(0, 1);
+		blobs.add(new Bouncer(100, 200, width, height));
+		blobs.get(1).setVelocity(0, -1);
+		blobs.add(new Bouncer(200, 100, width, height));
+		blobs.get(2).setVelocity(0, 1);
+		blobs.add(new Bouncer(200, 200, width, height));
+		blobs.get(3).setVelocity(0, -1);
+		System.out.println(colliders.size());
 	}
 
 	public static void main(String[] args) {
